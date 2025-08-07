@@ -16,6 +16,8 @@ import {
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
+import Swal from "sweetalert2"
+import { useState } from "react";
 
 // Zod schema
 const signUpSchema = z.object({
@@ -30,6 +32,8 @@ type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
+
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -42,11 +46,15 @@ export default function SignUp() {
   });
 
   const onSubmit = async (data: SignUpFormValues) => {
+    setLoading(true)
     const { email, password, displayName, nativeLanguage, learningLanguages } = data;
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
+
+      // Test updateProfile only
       await updateProfile(userCred.user, { displayName });
 
+      // Test setDoc only
       await setDoc(doc(db, "users", userCred.user.uid), {
         displayName,
         email,
@@ -55,10 +63,24 @@ export default function SignUp() {
         createdAt: serverTimestamp(),
       });
 
+      await Swal.fire({
+        icon: "success",
+        title: "Signup successful!",
+        text: "Welcome to LinguNaija!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
       navigate("/dashboard");
     } catch (error: any) {
-      console.error(error.message);
-      alert("Signup failed. Please try again.");
+      console.error("Signup error:", error); // Check the console for details
+      await Swal.fire({
+        icon: "error",
+        title: "Signup failed",
+        text: error.message || "Please try again.",
+      });
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -136,8 +158,8 @@ export default function SignUp() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full bg-[#ffb703] hover:bg-[#fca311] text-white">
-                Sign Up
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Signing up..." : "Sign Up"}
               </Button>
             </form>
           </Form>

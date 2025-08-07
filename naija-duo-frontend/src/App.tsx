@@ -1,8 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SignUp from "./pages/auth/sign-up/sign-up";
-import LandingPage from "./pages/landing";
-import LoginPage from "./pages/auth/login"; 
-
+import { SignUp, LandingPage, LoginPage, LessonsPage, Dashboard, LessonDetail1, ProgressPage } from "./pages";
 function App() {
   return (
     <BrowserRouter>
@@ -10,6 +7,10 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/lessons" element={<LessonsPage />} />
+        <Route path="/lessons/:lessonId" element={<LessonDetail1 />} />
+        <Route path="/progress" element={<ProgressPage />} /> 
         {/* Add other routes here */}
       </Routes>
     </BrowserRouter>

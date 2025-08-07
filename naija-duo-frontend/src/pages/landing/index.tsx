@@ -4,7 +4,7 @@ import lingunaija from "@/assets/lingunaija-illustration.png"; // Adjust the pat
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f7f4ef] to-[#fdf9f3] text-neutral-800">
-      <div className="max-w-5xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-12">
         <header className="flex items-center justify-between mb-16">
           <h1 className="text-3xl font-bold text-[#1f1f1f] tracking-tight">
             LinguNaija
@@ -21,7 +21,7 @@ export default function LandingPage() {
           </div>
         </header>
 
-        <main className="flex flex-col lg:flex-row items-center justify-between gap-8">
+        <main className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-60">
           <div className="lg:w-1/2">
             <h2 className="text-5xl font-extrabold leading-tight mb-6">
               Learn Nigerian Languages <span className="text-[#ffb703]">your way</span>
@@ -49,7 +49,7 @@ export default function LandingPage() {
               </li>
             </ul>
             <Link to="/signup">
-              <Button className="bg-[#023047] hover:bg-[#012a3a] text-white text-lg px-6 py-4 rounded-2xl">
+              <Button className="bg-[#023047] hover:bg-[#012a3a] text-white text-md px-6 py-7 rounded-2xl">
                 Start Learning Now
               </Button>
             </Link>
